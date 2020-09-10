@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Font Awesome CDN -->
+    <script src="https://kit.fontawesome.com/231e0c5666.js" crossorigin="anonymous"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/todo.css">
+
+    <title><%=title%></title>
+  </head>
+  <body>
+
+
+    <div class="container">
+
+      <h1 class="page-heading text-center"><i class="fas fa-clipboard-list"></i>Todo App</h1>
+      <form action="/todos" method="POST">
+
+        <div class="form-group row">
+          <div class="item-1 col-md-12 ml-auto mr-auto">
+            <label class="label-decoration" for="description">Description</label>
+            <input type="text" maxlength="30" class="form-control" name="description" placeholder="What do you wanna do..?" required>
+          </div>
+        </div>
+
+        <div class="form-group row ">
+          <div class="item-2 col-md-6 ml-auto">
+            <label class="label-decoration" for="category">Category</label>
+            <select class="form-control" name="category">
+              <option value="" selected>Choose Category...</option>
+              <option value="personal">Personal</option>
+              <option value="work">Work</option>
+              <option value="school">School</option>
+              <option value="cleaning">Cleaning</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="item-3 col-md-6 mr-auto">
+            <label class="label-decoration" for="datepicker">Due Date</label>
+            <input type="date" class="form-control" name="due_date" required>
+          </div>
+        </div>
+
+        <div class="form-group row text-center py-3">
+          <button class="btn btn-primary ml-auto mr-1" type="submit"><i class="fas fa-plus"></i> Add Task</button>
+          <button type="submit" form="checkForm" class="btn btn-danger mr-auto"><i class="fas fa-trash-alt"></i> Delete Task</button>
+        </div>
+      </form>
+      <form id="checkForm" action="/delete-item" method="POST">
+
+        <ul class="list-group col-sm-12">
+          <% for(let i=0;i<todos.length;i++) { %>
+            <li class="todo list-group-item rounded-0">
+              <div class="lhs-wrapper">
+                <div class="desc-cat">
+                  <input class="form-check-input" type="checkbox"  name="id" value="<%= todos[i]._id %>" />
+                  <label class="todo-description form-check-label text-break" for="check">
+                    <%= todos[i].description %>
+                  </label>
+                </div>
+                <div class="todo-dueDate">
+                  <i class="far fa-calendar-alt"></i>
+                  <%const month = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"]%>
+                  <%= month[todos[i].due_date.getMonth()] %> <%= todos[i].due_date.getDate() %>,
+                  <%= todos[i].due_date.getFullYear() %>
+                </div>
+              </div>
+              <div class="category-<%= todos[i].category %> badge float-right">
+                <%= todos[i].category %>
+              </div>
+            </li>
+          <% } %>
+        </ul>
+      </form>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <script src="/js/todo.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html> 
